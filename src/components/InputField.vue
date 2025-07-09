@@ -44,7 +44,7 @@ import EyeSlashIcon from "./icons/EyeSlashIcon.vue";
 import EyeIcon from "./icons/EyeIcon.vue";
 
 export default defineComponent({
-  components: { Field, ErrorMessage, EyeIcon, EyeSlashIcon },
+  components: { Field, ErrorMessage, EyeIcon, EyeSlashIconEyeSlashIconEyeIcon },
   props: {
     label: { type: String, required: true },
     id: { type: String, required: true },
