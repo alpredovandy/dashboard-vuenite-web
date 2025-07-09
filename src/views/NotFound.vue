@@ -1,5 +1,5 @@
 <template>
-  <div class="prose max-w-none">
+  <div>
     <h1>Not Found.</h1>
     <p>
       You’ve landed on a URL that doesnt seem to exist. Return
@@ -12,7 +12,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  components: {},
+  name: "NotFoundPage",
 });
 </script>
 

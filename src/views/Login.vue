@@ -1,7 +1,5 @@
 <template>
-  <div class="prose max-w-none">
-    <LoginFeature />
-  </div>
+  <LoginFeature />
 </template>
 
 <script lang="ts">

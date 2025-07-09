@@ -1,7 +1,5 @@
 <template>
-  <div class="prose max-w-none">
-    <h1>Profile</h1>
-  </div>
+  <h1>Profile</h1>
 </template>
 
 <script lang="ts">
