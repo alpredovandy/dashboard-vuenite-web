@@ -6,16 +6,16 @@
   >
     <!-- User ID -->
     <InputField
-      label="User ID"
+      label="User ID*"
       id="userId"
       name="userId"
       v-model="formLogin.userId"
-      placeholder="Enter your user ID"
+      placeholder="Enter your User ID"
     />
 
     <!-- Password -->
     <InputField
-      label="Password"
+      label="Password*"
       id="password"
       name="password"
       v-model="formLogin.password"
