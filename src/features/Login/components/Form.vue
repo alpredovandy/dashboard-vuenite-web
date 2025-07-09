@@ -43,6 +43,19 @@
     >
       Login
     </button>
+
+    <!-- Register Link -->
+    <div class="text-center mt-4">
+      <p class="text-sm text-gray-600">
+        No Account?
+        <router-link
+          to="/register"
+          class="text-sky-600 underline font-medium"
+        >
+          Register here
+        </router-link>
+      </p>
+    </div>
   </Form>
 </template>
 
@@ -70,13 +83,11 @@ export default defineComponent({
     });
 
     const onSubmit = (values: typeof formLogin) => {
-      console.log("fox Form submitted with:", values);
-
+      console.log("Form submitted with:", values);
       if (values.keepLoggedIn) {
         // Save a persistent cookie for 1 year
         Cookies.set(ACCESS_TOKEN, "session-token", { expires: 365 });
       } else {
-        // Remove the cookie if exists
         Cookies.remove(ACCESS_TOKEN);
       }
     };

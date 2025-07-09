@@ -6,7 +6,7 @@
     <Header />
 
     <!-- Main Content -->
-    <div class="flex-1">
+    <div class="flex-1 flex items-center justify-center min-h-[calc(75vh)]">
       <router-view />
     </div>
 
