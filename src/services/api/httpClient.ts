@@ -9,7 +9,7 @@ import axios, {
 import Cookies from "js-cookie";
 
 const api: AxiosInstance = axios.create({
-  baseURL: FAKE_API_URL,
+  baseURL: FAKE_API_URL ?? "",
 });
 
 api.interceptors.request.use(
