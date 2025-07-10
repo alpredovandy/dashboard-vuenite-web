@@ -1,13 +1,13 @@
 <template>
-  <LoginFeature />
+  <AuthFeature />
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import LoginFeature from "../features/Login/index.vue";
+import AuthFeature from "../features/Auth/index.vue";
 
 export default defineComponent({
-  name: "LoginPage",
-  components: { LoginFeature },
+  name: "AuthPage",
+  components: { AuthFeature },
 });
 </script>

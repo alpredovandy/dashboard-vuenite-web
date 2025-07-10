@@ -6,7 +6,7 @@ import axios, {
   InternalAxiosRequestConfig,
   AxiosRequestHeaders,
 } from "axios";
-import * as Cookies from "js-cookie";
+import Cookies from "js-cookie";
 
 const api: AxiosInstance = axios.create({
   baseURL: FAKE_API_URL,
