@@ -1,13 +1,16 @@
 <template>
   <div class="mb-4 relative">
-    <label :for="id" class="block text-sm font-medium text-gray-700 mb-1">{{
+    <label
+      :for="id"
+      class="block text-sm font-medium text-gray-700 mb-1"
+    >{{
       label
     }}</label>
     <div class="relative">
       <!-- Input -->
       <Field
-        v-model="localValue"
         :id="id"
+        v-model="localValue"
         :name="name"
         :type="currentType"
         :placeholder="placeholder"
@@ -15,6 +18,7 @@
           'w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent',
           className,
         ]"
+        validation-on-input
       />
 
       <!-- Password toggle icon -->
@@ -22,8 +26,8 @@
         v-if="type === 'password'"
         class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 focus:outline-none"
         type="button"
-        @click="togglePassword"
         aria-label="Toggle password visibility"
+        @click="togglePassword"
       >
         <!-- Eye (show) icon -->
         <eye-icon v-if="showPassword" />
@@ -33,7 +37,10 @@
       </button>
     </div>
     <!-- Error message -->
-    <ErrorMessage :name="name" class="text-red-500 text-sm mt-1" />
+    <ErrorMessage
+      :name="name"
+      class="text-red-500 text-sm mt-1"
+    />
   </div>
 </template>
 
@@ -49,7 +56,7 @@ export default defineComponent({
     label: { type: String, required: true },
     id: { type: String, required: true },
     name: { type: String, required: true },
-    modelValue: { type: [String, Number], required: true },
+    modelValue: { type: String as () => string | number, default: "" },
     type: { type: String, default: "text" },
     placeholder: { type: String, default: "" },
     className: { type: String, default: "" },
