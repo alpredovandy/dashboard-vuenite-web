@@ -114,7 +114,7 @@ export default defineComponent({
   },
   setup(props) {
     const router = useRouter();
-    const { error, isLoading, onLogin, onRegister } = useAuth();
+    const { isLoading, onLogin, onRegister } = useAuth();
 
     const type = computed(() => props.mode);
 
@@ -170,19 +170,21 @@ export default defineComponent({
           email: values.email,
           password: values.password,
           keepMeLogged: authForm.keepLoggedIn,
+        }).then(() => {
+          setTimeout(() => {
+            router.push("/profile");
+          }, 500);
         });
       } else {
         onRegister({
           name: values.name,
           email: values.email,
           password: values.password,
-        });
-
-        if (!error.value) {
+        }).then(() => {
           setTimeout(() => {
             router.push("/");
           }, 1500);
-        }
+        });
       }
     };
 

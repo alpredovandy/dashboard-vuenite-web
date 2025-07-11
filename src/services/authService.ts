@@ -7,7 +7,6 @@ import {
 import httpClient from "./api/httpClient";
 import Cookies from "js-cookie";
 import { ACCESS_TOKEN, KEEPME_LOGGED_IN } from "@/constants/configs";
-import { fallbackPath } from "@/router";
 import { getAvatarByName } from "@/utils";
 
 export const login = async ({
@@ -30,10 +29,6 @@ export const login = async ({
     Cookies.set(ACCESS_TOKEN, String(response.access_token), {
       expires: keepMeLogged ? 365 : 1,
     });
-
-    setTimeout(() => {
-      window.location.replace(window.location.origin + fallbackPath);
-    }, 250);
 
     return response;
   } catch (error: unknown) {

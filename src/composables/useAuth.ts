@@ -4,16 +4,15 @@ import { ACCESS_TOKEN, KEEPME_LOGGED_IN } from "@/constants/configs";
 import { login, register } from "@/services/authService";
 import { useToast } from "vue-toastification";
 import { AuthLoginRequestType, AuthRegisterRequestType } from "@/types/auth";
+import { isEmpty } from "@/utils";
 
 export function useAuth() {
   const toast = useToast();
 
-  const token = ref<string | undefined>(Cookies.get(ACCESS_TOKEN));
-  const user = ref<unknown | null>(null);
   const error = ref<string | null>(null);
   const isLoading = ref(false);
 
-  const isAuthenticated = computed(() => !!token.value);
+  const isAuthenticated = computed(() => !isEmpty(Cookies.get(ACCESS_TOKEN)));
 
   const onLogin = async (credentials: AuthLoginRequestType) => {
     isLoading.value = true;
@@ -21,8 +20,8 @@ export function useAuth() {
     try {
       await login(credentials);
       toast.success("Login successfully.");
-    } catch (error: any) {
-      error.value = error?.message || "Login services something wrong.";
+    } catch (err: any) {
+      error.value = err?.message || "Login failed.";
       toast.error(error.value);
     } finally {
       isLoading.value = false;
@@ -35,23 +34,20 @@ export function useAuth() {
     try {
       await register(credentials);
       toast.success("Register successfully.");
-    } catch (error: any) {
-      error.value = error?.message || "Register services something wrong.";
+    } catch (err: any) {
+      error.value = err?.message || "Register failed.";
       toast.error(error.value);
     } finally {
       isLoading.value = false;
     }
   };
 
-  const onLogout = () => {
+  const onLogout = async () => {
     Cookies.remove(ACCESS_TOKEN);
     Cookies.remove(KEEPME_LOGGED_IN);
-
-    window.location.replace(window.location.origin + "/");
   };
 
   return {
-    user,
     error,
     isAuthenticated,
     isLoading,

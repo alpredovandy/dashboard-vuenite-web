@@ -2,8 +2,9 @@
   <div
     class="grid grid-cols-1 md:grid-cols-[240px_1fr] p-4 md:p-6 gap-6 md:gap-8"
   >
-    <div class="fixed top-4 right-4 z-50 md:hidden">
+    <div class="fixed top-10 right-5 z-50">
       <button
+        v-if="!isDesktop"
         class="p-2 text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-md"
         @click="toggleSidebar"
       >
@@ -15,6 +16,14 @@
           v-else
           class="w-6 h-6"
         />
+      </button>
+      <button
+        v-else
+        class="flex hover:text-sky-600 items-center text-gray-700 ml-0 md:ml-4 text-sm md:text-base whitespace-nowrap gap-2"
+        @click="logout"
+      >
+        <logout-icon class="w-5 h-5" />
+        <span class="mr-2">Logout</span>
       </button>
     </div>
 
@@ -49,7 +58,7 @@
       <button
         v-if="!isDesktop"
         class="my-4 px-4 underline text-sky-600"
-        @click="onLogout"
+        @click="logout"
       >
         Logout
       </button>
@@ -224,11 +233,12 @@ import {
   Menu as MenuIcon,
   X as XIcon,
   ChevronLeft as ChevronLeftIcon,
+  LogOut as LogoutIcon,
 } from "lucide-vue-next";
 
+import { useAuth } from "@/composables/useAuth";
 import { useDesktop } from "@/composables/useDesktop";
 import { useProfile } from "@/composables/useProfile";
-import { useAuth } from "@/composables/useAuth";
 
 import InputField from "@/components/InputField.vue";
 import Spinner from "@/components/Spinner.vue";
@@ -254,6 +264,7 @@ export default defineComponent({
     MenuIcon,
     XIcon,
     ChevronLeftIcon,
+    LogoutIcon,
   },
   setup() {
     const { onLogout } = useAuth();
@@ -274,6 +285,7 @@ export default defineComponent({
 
     onMounted(async () => {
       await getProfile();
+
       if (profile.value) {
         Object.assign(userForm, {
           name: profile.value.name || "",
@@ -321,8 +333,6 @@ export default defineComponent({
     );
 
     const onSubmit = (values: typeof userForm) => {
-      console.log("fox values", values);
-
       onUpdate({
         id: profile?.value?.id ?? "",
         name: values.name,
@@ -342,6 +352,11 @@ export default defineComponent({
 
     const toggleEditMode = () => (isEditing.value = !isEditing.value);
 
+    const logout = () => {
+      onLogout();
+      window.location.replace("/");
+    };
+
     return {
       avatar,
       profile,
@@ -354,7 +369,7 @@ export default defineComponent({
       isSidebarOpen,
       isDesktop,
       isEditing,
-      onLogout,
+      logout,
       onSubmit,
       setActiveItem,
       toggleSidebar,

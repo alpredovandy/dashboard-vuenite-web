@@ -6,6 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
 import ProfileFeature from "../features/Profile/index.vue";
 
 export default defineComponent({
