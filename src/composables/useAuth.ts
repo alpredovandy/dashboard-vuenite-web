@@ -1,50 +1,62 @@
 import { computed, ref } from "vue";
 import Cookies from "js-cookie";
-import { ACCESS_TOKEN } from "@/constants/configs";
-import { login, getAuthUser } from "@/services/authService";
+import { ACCESS_TOKEN, KEEPME_LOGGED_IN } from "@/constants/configs";
+import { login, register } from "@/services/authService";
 import { useToast } from "vue-toastification";
-import { useRouter } from "vue-router";
+import { AuthLoginRequestType, AuthRegisterRequestType } from "@/types/auth";
 
 export function useAuth() {
   const toast = useToast();
-  const router = useRouter();
 
+  const token = ref<string | undefined>(Cookies.get(ACCESS_TOKEN));
   const user = ref<unknown | null>(null);
   const error = ref<string | null>(null);
   const isLoading = ref(false);
 
-  const isAuthenticated = computed(() => !!Cookies.get(ACCESS_TOKEN));
+  const isAuthenticated = computed(() => !!token.value);
 
-  const onLogin = async (credentials: {
-    username: string;
-    password: string;
-    keepMeLogged: boolean;
-  }) => {
+  const onLogin = async (credentials: AuthLoginRequestType) => {
     isLoading.value = true;
     error.value = null;
     try {
-      const response = await login(credentials);
-      user.value = response;
-
+      await login(credentials);
       toast.success("Login successfully.");
-      router.push("/profile");
     } catch (error: any) {
-      error.value = error?.message || "Auth services something wrong.";
+      error.value = error?.message || "Login services something wrong.";
       toast.error(error.value);
     } finally {
       isLoading.value = false;
     }
   };
 
-  const getUser = async () => {
-    if (isAuthenticated.value) return;
+  const onRegister = async (credentials: AuthRegisterRequestType) => {
+    isLoading.value = true;
+    error.value = null;
     try {
-      const response = await getAuthUser();
-      user.value = response;
-    } catch (err: any) {
-      error.value = err.message || "Get user data something wrong.";
+      await register(credentials);
+      toast.success("Register successfully.");
+    } catch (error: any) {
+      error.value = error?.message || "Register services something wrong.";
+      toast.error(error.value);
+    } finally {
+      isLoading.value = false;
     }
   };
 
-  return { isAuthenticated, user, error, isLoading, onLogin, getUser };
+  const onLogout = () => {
+    Cookies.remove(ACCESS_TOKEN);
+    Cookies.remove(KEEPME_LOGGED_IN);
+
+    window.location.replace(window.location.origin + "/");
+  };
+
+  return {
+    user,
+    error,
+    isAuthenticated,
+    isLoading,
+    onLogin,
+    onLogout,
+    onRegister,
+  };
 }
