@@ -47,6 +47,7 @@
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
 import { Field, ErrorMessage } from "vee-validate";
+
 import EyeSlashIcon from "./icons/EyeSlashIcon.vue";
 import EyeIcon from "./icons/EyeIcon.vue";
 

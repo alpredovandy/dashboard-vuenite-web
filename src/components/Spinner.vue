@@ -1,6 +1,5 @@
 <template>
   <div class="spinner">
-    <!-- You can customize the spinner here -->
     <svg
       width="50"
       height="50"
