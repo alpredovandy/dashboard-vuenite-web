@@ -5,14 +5,22 @@
     class="space-y-5"
     @submit="onSubmit"
   >
-    <InputField
-      id="userId"
-      v-model="authForm.userId"
-      label="User ID*"
-      name="userId"
+    <input-field
+      v-if="type !== AUTH_FORM.login"
+      id="name"
+      v-model="authForm.name"
+      label="Name*"
+      name="name"
     />
 
-    <InputField
+    <input-field
+      id="email"
+      v-model="authForm.email"
+      label="Email*"
+      name="email"
+    />
+
+    <input-field
       id="password"
       v-model="authForm.password"
       label="Password*"
@@ -20,8 +28,8 @@
       type="password"
     />
 
-    <InputField
-      v-if="type !== 'login'"
+    <input-field
+      v-if="type !== AUTH_FORM.login"
       id="confirmPassword"
       v-model="authForm.confirmPassword"
       label="Confirm Password*"
@@ -30,7 +38,7 @@
     />
 
     <div
-      v-if="type === 'login'"
+      v-if="type === AUTH_FORM.login"
       class="flex items-center mt-4"
     >
       <Field
@@ -68,12 +76,16 @@
 
     <div class="text-center mt-4">
       <p class="text-sm text-gray-600">
-        {{ type === "login" ? "No Account?" : "Already have an account?" }}
+        {{
+          type === AUTH_FORM.login
+            ? "Don't have an account?"
+            : "Already have an account?"
+        }}
         <router-link
-          :to="type === 'login' ? '/register' : '/'"
+          :to="type === AUTH_FORM.login ? '/register' : '/'"
           class="text-sky-600 underline font-medium"
         >
-          {{ type === "login" ? "Register here" : "Login here" }}
+          {{ type === AUTH_FORM.login ? "Register here" : "Login here" }}
         </router-link>
       </p>
     </div>
@@ -82,68 +94,99 @@
 
 <script lang="ts">
 import * as yup from "yup";
-import { computed, defineComponent, onMounted, reactive } from "vue";
+import { computed, defineComponent, reactive, watch } from "vue";
 import { Field, Form } from "vee-validate";
+import { useRouter } from "vue-router";
 
 import InputField from "@/components/InputField.vue";
 import { useAuth } from "@/composables/useAuth";
+
+import { AUTH_FORM } from "../../configs";
 
 export default defineComponent({
   name: "AuthForm",
   components: { InputField, Form, Field },
   props: {
     mode: {
-      type: String as () => "login" | "register",
+      type: String as () => AUTH_FORM,
       default: "",
     },
   },
   setup(props) {
-    const { isLoading, isAuthenticated, onLogin, getUser } = useAuth();
-
-    onMounted(() => {
-      if (isAuthenticated.value) {
-        getUser();
-      }
-    });
+    const router = useRouter();
+    const { error, isLoading, onLogin, onRegister } = useAuth();
 
     const type = computed(() => props.mode);
 
     const initialValues = {
-      userId: "",
+      name: "",
+      email: "",
       password: "",
       confirmPassword: "",
       keepLoggedIn: false,
     };
 
-    const authForm = reactive(initialValues);
+    const authForm = reactive({ ...initialValues });
+
+    watch(
+      () => props.mode,
+      (newMode, oldMode) => {
+        if (newMode !== oldMode) {
+          // Resets all properties of authForm to their initial state
+          Object.assign(authForm, initialValues);
+        }
+      },
+      { immediate: true }
+    );
 
     const authFormSchema = computed(() => {
-      if (props.mode === "register") {
+      if (type.value === AUTH_FORM.login) {
         return yup.object({
-          userId: yup.string().required("User ID is required."),
+          email: yup
+            .string()
+            .required("Email is required.")
+            .email("Email must be a valid email"),
+          password: yup.string().required("Password is required."),
+        });
+      } else {
+        return yup.object({
+          name: yup.string().required("Name is required."),
+          email: yup
+            .string()
+            .required("Email is required.")
+            .email("Email must be a valid email"),
           password: yup.string().required("Password is required."),
           confirmPassword: yup
             .string()
             .required("Confirm password is required.")
             .oneOf([yup.ref("password")], "Passwords must match"),
         });
-      } else {
-        return yup.object({
-          userId: yup.string().required("User ID is required."),
-          password: yup.string().required("Password is required."),
-        });
       }
     });
 
-    const onSubmit = (value: typeof authForm) => {
-      onLogin({
-        username: value.userId,
-        password: value.password,
-        keepMeLogged: authForm.keepLoggedIn,
-      });
+    const onSubmit = (values: typeof authForm) => {
+      if (type.value === AUTH_FORM.login) {
+        onLogin({
+          email: values.email,
+          password: values.password,
+          keepMeLogged: authForm.keepLoggedIn,
+        });
+      } else {
+        onRegister({
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        });
+
+        if (!error.value) {
+          setTimeout(() => {
+            router.push("/");
+          }, 1500);
+        }
+      }
     };
 
-    return { authForm, onSubmit, authFormSchema, type, isLoading };
+    return { authForm, onSubmit, authFormSchema, type, AUTH_FORM, isLoading };
   },
 });
 </script>
