@@ -1,29 +1,39 @@
-import { AuthLoginRequestType, AuthUserResponseType } from "@/types/auth-user";
+import {
+  AuthLoginRequestType,
+  AuthLoginResponseType,
+  AuthRegisterRequestType,
+  AuthRegisterResponseType,
+} from "@/types/auth";
 import httpClient from "./api/httpClient";
 import Cookies from "js-cookie";
 import { ACCESS_TOKEN, KEEPME_LOGGED_IN } from "@/constants/configs";
+import { fallbackPath } from "@/router";
+import { getAvatarByName } from "@/utils";
 
 export const login = async ({
-  username,
+  email,
   password,
   keepMeLogged,
-}: AuthLoginRequestType): Promise<AuthUserResponseType> => {
+}: AuthLoginRequestType): Promise<AuthLoginResponseType> => {
   if (keepMeLogged) {
     Cookies.set(KEEPME_LOGGED_IN, String(keepMeLogged), { expires: 365 });
   }
 
-  const maxExpiresMin = 43200;
-
   try {
     const response = await httpClient
-      .post<AuthUserResponseType>("/auth/login", {
-        username,
+      .post<AuthLoginResponseType>("/v1/auth/login", {
+        email,
         password,
-        expiresInMins: keepMeLogged ? maxExpiresMin : 60,
       })
       .then((res) => res.data);
 
-    Cookies.set(ACCESS_TOKEN, String(response.accessToken), { expires: 365 });
+    Cookies.set(ACCESS_TOKEN, String(response.access_token), {
+      expires: keepMeLogged ? 365 : 1,
+    });
+
+    setTimeout(() => {
+      window.location.replace(window.location.origin + fallbackPath);
+    }, 250);
 
     return response;
   } catch (error: unknown) {
@@ -31,11 +41,15 @@ export const login = async ({
   }
 };
 
-export const getAuthUser = async (): Promise<AuthUserResponseType> => {
+export const register = async (
+  payload: AuthRegisterRequestType
+): Promise<AuthRegisterResponseType> => {
   try {
+    const avatarURL = getAvatarByName(payload.name);
     const response = await httpClient
-      .get<AuthUserResponseType>("/auth/me", {
-        withCredentials: true,
+      .post<AuthRegisterResponseType>("/v1/users", {
+        ...payload,
+        avatar: avatarURL,
       })
       .then((res) => res.data);
 
