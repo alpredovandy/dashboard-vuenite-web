@@ -30,11 +30,13 @@ export const router = createRouter({
   routes,
 });
 
+export let fallbackPath = "/";
+
 router.beforeEach((to, _from, next) => {
   const { isAuthenticated } = useAuth();
 
   const initialAuthRoute = routes.find((r) => r.meta?.requiresAuth);
-  const fallbackPath = initialAuthRoute ? initialAuthRoute.path : "/";
+  fallbackPath = initialAuthRoute ? initialAuthRoute.path : "/";
 
   if (to.meta.noAuth) {
     return next();
@@ -52,6 +54,6 @@ router.beforeEach((to, _from, next) => {
       return next({ path: "/" }); // redirect to login/home
     }
   }
-  // Otherwise, allow navigation
+
   next();
 });

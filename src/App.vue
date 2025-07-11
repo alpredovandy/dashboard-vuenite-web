@@ -1,14 +1,12 @@
 <template>
   <div
-    class="min-h-screen bg-gradient-to-br from-green-100 via-blue-100 to-purple-100 flex flex-col"
+    class="min-h-screen min-w-screen bg-gradient-to-br from-green-100 via-blue-100 to-purple-100 flex flex-col"
   >
     <!-- Header -->
     <Header />
 
     <!-- Main Content -->
-    <div
-      class="flex-1 flex items-center justify-center px-4 min-h-[calc(75vh)]"
-    >
+    <div class="flex-1">
       <router-view />
     </div>
 

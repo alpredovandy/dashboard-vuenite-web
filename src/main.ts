@@ -15,7 +15,7 @@ if (import.meta.hot) {
 }
 
 app.use(Toast, {
-  timeout: 500,
+  timeout: 1500,
 });
 app.use(router);
 app.mount("#app");

@@ -1,5 +1,7 @@
 <template>
-  <AuthFeature />
+  <div class="flex items-center justify-center px-4 min-h-[calc(75vh)]">
+    <auth-feature />
+  </div>
 </template>
 
 <script lang="ts">
