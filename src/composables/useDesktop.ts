@@ -8,7 +8,7 @@ export function useDesktop() {
   };
 
   onMounted(() => {
-    checkScreenSize(); // Initial check
+    checkScreenSize();
     window.addEventListener("resize", checkScreenSize);
   });
 

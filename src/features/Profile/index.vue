@@ -185,12 +185,13 @@
                 type="password"
               />
 
-              <div
-                class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-3"
-              >
+              <div class="py-2 md:py-3">
+                <div class="h-0.5 bg-neutral-500" />
+              </div>
+
+              <div class="flex flex-row justify-between space-x-4">
                 <button
-                  type="button"
-                  class="flex-1 text-neutral-600 py-2 border border-neutral-600 px-4 font-semibold rounded hover:bg-neutral-50 transition"
+                  class="w-full text-red-500 py-2 bg-white border border-red-500 px-4 font-semibold rounded hover:bg-red-50 transition"
                   @click="handleReset"
                 >
                   Cancel
@@ -198,7 +199,7 @@
                 <button
                   type="submit"
                   :disabled="!meta?.valid || isLoading"
-                  class="flex-1 bg-black text-white py-2 px-4 rounded hover:bg-gray-800 font-semibold transition disabled:opacity-30 disabled:cursor-not-allowed"
+                  class="w-full bg-black/90 text-white py-2 px-4 rounded font-semibold hover:bg-gray-700/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {{ isLoading ? "Loading..." : "Update" }}
                 </button>

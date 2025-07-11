@@ -56,10 +56,9 @@
       >Keep me logged in</label>
     </div>
 
-    <div class="flex space-x-4 mt-3">
+    <div class="flex flex-row justify-between space-x-4 mt-8">
       <button
-        type="button"
-        class="flex-1 bg-red-500 text-white py-2 px-4 rounded font-semibold hover:bg-red-600 transition"
+        class="w-full text-red-500 py-2 bg-white border border-red-500 px-4 font-semibold rounded hover:bg-red-50 transition"
         @click="handleReset"
       >
         Cancel
@@ -68,7 +67,7 @@
       <button
         type="submit"
         :disabled="!meta?.valid || isLoading"
-        class="flex-1 bg-black text-white py-2 px-4 rounded font-semibold hover:bg-gray-800 transition disabled:opacity-30 disabled:cursor-not-allowed"
+        class="w-full bg-black/90 text-white py-2 px-4 rounded font-semibold hover:bg-gray-700/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {{ isLoading ? "Loading..." : type === "login" ? "Login" : "Register" }}
       </button>
