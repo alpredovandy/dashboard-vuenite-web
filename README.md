@@ -27,6 +27,6 @@ Link `=>` https://dashboard-vuenite-web.vercel.app
 
 ## Screenshot
 
-![SCREENSHOT-I](https://github.com/alpredovandy/dashboard-web/blob/master/src/assets/screenshot-1.png?raw=true)
-![SCREENSHOT-II](https://github.com/alpredovandy/dashboard-web/blob/master/src/assets/screenshot-2.png?raw=true)
-![SCREENSHOT-III](https://github.com/alpredovandy/dashboard-web/blob/master/src/assets/screenshot-3.png?raw=true)
+![SCREENSHOT-I](https://github.com/alpredovandy/dashboard-vuenite-web/blob/master/src/assets/screenshot-1.png?raw=true)
+![SCREENSHOT-II](https://github.com/alpredovandy/dashboard-vuenite-web/blob/master/src/assets/screenshot-2.png?raw=true)
+![SCREENSHOT-III](https://github.com/alpredovandy/dashboard-vuenite-web/blob/master/src/assets/screenshot-3.png?raw=true)
