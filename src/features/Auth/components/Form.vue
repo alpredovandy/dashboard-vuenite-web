@@ -56,37 +56,53 @@
       >Keep me logged in</label>
     </div>
 
-    <div class="flex flex-row justify-between space-x-4 mt-8">
-      <button
-        class="w-full text-red-500 py-2 bg-white border border-red-500 px-4 font-semibold rounded hover:bg-red-50 transition"
-        @click="handleReset"
-      >
-        Cancel
-      </button>
+    <div class="flex-1">
+      <div class="flex flex-col items-center">
+        <div
+          v-if="type === AUTH_FORM.register"
+          class="w-full md:w-[85%] border-t-2 border-gray-600 mt-3 md:mt-4"
+        />
+      </div>
 
-      <button
-        type="submit"
-        :disabled="!meta?.valid || isLoading"
-        class="w-full bg-black/90 text-white py-2 px-4 rounded font-semibold hover:bg-gray-700/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+      <div
+        :class="`${
+          type === AUTH_FORM.register && `flex flex-col my-7 md:my-8`
+        }`"
       >
-        {{ isLoading ? "Loading..." : type === "login" ? "Login" : "Register" }}
-      </button>
-    </div>
+        <div class="flex flex-row justify-between space-x-4">
+          <button
+            class="w-full text-red-500 py-2 bg-white border border-red-500 px-4 font-semibold rounded hover:bg-red-50 transition"
+            @click="handleReset"
+          >
+            Cancel
+          </button>
 
-    <div class="text-center mt-4">
-      <p class="text-sm text-gray-600">
-        {{
-          type === AUTH_FORM.login
-            ? "Don't have an account?"
-            : "Already have an account?"
-        }}
-        <router-link
-          :to="type === AUTH_FORM.login ? '/register' : '/'"
-          class="text-sky-600 underline font-medium"
-        >
-          {{ type === AUTH_FORM.login ? "Register here" : "Login here" }}
-        </router-link>
-      </p>
+          <button
+            type="submit"
+            :disabled="!meta?.valid || isLoading"
+            class="w-full bg-black/90 text-white py-2 px-4 rounded font-semibold hover:bg-gray-700/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {{
+              isLoading ? "Loading..." : type === "login" ? "Login" : "Register"
+            }}
+          </button>
+        </div>
+        <div class="text-center mt-4">
+          <p class="text-sm text-gray-600">
+            {{
+              type === AUTH_FORM.login
+                ? "Don't have an account?"
+                : "Already have an account?"
+            }}
+            <router-link
+              :to="type === AUTH_FORM.login ? '/register' : '/'"
+              class="text-sky-600 underline font-medium"
+            >
+              {{ type === AUTH_FORM.login ? "Register here" : "Login here" }}
+            </router-link>
+          </p>
+        </div>
+      </div>
     </div>
   </Form>
 </template>

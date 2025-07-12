@@ -1,10 +1,10 @@
 import { ref, onMounted, onUnmounted } from "vue";
 
-export function useDesktop() {
+export function useScreen() {
   const isDesktop = ref(false);
 
   const checkScreenSize = () => {
-    isDesktop.value = window.innerWidth >= 768;
+    isDesktop.value = window.innerWidth >= 1024;
   };
 
   onMounted(() => {

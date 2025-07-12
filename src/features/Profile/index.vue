@@ -1,6 +1,6 @@
 <template>
   <div
-    class="grid grid-cols-1 md:grid-cols-[240px_1fr] p-4 md:p-6 gap-6 md:gap-8"
+    class="grid grid-cols-1 lg:grid-cols-[240px_1fr] p-4 lg:p-6 gap-6 lg:gap-8"
   >
     <div class="fixed top-10 right-5 z-50">
       <button
@@ -19,7 +19,7 @@
       </button>
       <button
         v-else
-        class="flex hover:text-sky-600 items-center text-gray-700 ml-0 md:ml-4 text-sm md:text-base whitespace-nowrap gap-2"
+        class="flex hover:text-sky-600 items-center text-gray-700 ml-0 lg:ml-4 text-sm lg:text-base whitespace-nowrap gap-2"
         @click="logout"
       >
         <logout-icon class="w-5 h-5" />
@@ -29,20 +29,20 @@
 
     <div
       :class="[
-        'md:pr-8 md:block',
-        'md:relative md:mt-[4.25em]',
-        'fixed inset-y-0 left-0 z-40 w-64 bg-white md:bg-transparent shadow-lg md:shadow-none transform transition-transform duration-300',
-        { '-translate-x-full': !isSidebarOpen && !isDesktop }, // Slide out on mobile when closed
-        { 'translate-x-0': isSidebarOpen || isDesktop }, // Slide in on mobile when open, always visible on desktop
+        'lg:pr-8 lg:block',
+        'lg:relative lg:mt-[4.25em]',
+        'fixed inset-y-0 left-0 z-40 w-64 bg-white lg:bg-transparent shadow-lg lg:shadow-none transform transition-transform duration-300',
+        { '-translate-x-full': !isSidebarOpen && !isDesktop },
+        { 'translate-x-0': isSidebarOpen || isDesktop },
       ]"
     >
-      <nav class="space-y-4 md:space-y-6 p-4 md:p-0">
+      <nav class="space-y-4 lg:space-y-6 p-4 lg:p-0">
         <a
           v-for="item in sidebarItems"
           :key="item.name"
           href="#"
           :class="[
-            'block text-gray-800 hover:text-gray-900 transition-colors duration-200 pb-2 text-sm md:text-base',
+            'block text-gray-800 hover:text-gray-900 transition-colors duration-200 pb-2 text-sm lg:text-base',
             activeItem === item.name
               ? 'font-semibold border-b-2 border-gray-800'
               : 'border-b border-dotted border-gray-400',
@@ -70,21 +70,21 @@
       @click="isSidebarOpen = false"
     />
 
-    <div class="flex-1 md:col-span-1">
-      <div class="items-start gap-y-8 md:gap-x-16">
+    <div class="flex-1 lg:col-span-1">
+      <div class="items-start gap-y-8 lg:gap-x-16">
         <div
-          class="col-span-1 md:col-span-2 flex items-center justify-between mb-4 md:mb-12"
+          class="col-span-1 lg:col-span-2 flex items-center justify-between mb-4 lg:mb-12"
         >
           <div class="flex items-center flex-grow">
-            <h1 class="text-2xl md:text-4xl text-gray-900 mr-2 md:mr-4">
+            <h1 class="text-2xl lg:text-4xl text-gray-900 mr-2 lg:mr-4">
               My <b>Profile</b>
             </h1>
-            <div class="h-0.5 bg-gray-800 flex-grow hidden md:block" />
+            <div class="h-0.5 bg-gray-800 flex-grow hidden lg:block" />
           </div>
           <div v-show="!isLoading && activeItem === SIDEBAR_TYPE.basic">
             <button
               v-if="!isEditing"
-              class="flex items-center text-gray-700 hover:text-gray-900 underline ml-0 md:ml-4 text-sm md:text-base whitespace-nowrap"
+              class="flex items-center text-gray-700 hover:text-gray-900 underline ml-0 lg:ml-4 text-sm lg:text-base whitespace-nowrap"
               @click="toggleEditMode"
             >
               <span class="mr-2">Edit profile</span>
@@ -92,7 +92,7 @@
             </button>
             <button
               v-else
-              class="flex items-center text-gray-700 hover:text-gray-900 underline ml-0 md:ml-4 text-sm md:text-base whitespace-nowrap gap-2"
+              class="flex items-center text-gray-700 hover:text-gray-900 underline ml-0 lg:ml-4 text-sm lg:text-base whitespace-nowrap gap-2"
               @click="toggleEditMode"
             >
               <ChevronLeftIcon class="w-5 h-5" />
@@ -103,43 +103,43 @@
 
         <div
           v-if="isLoading"
-          class="my-[7.5em] md:my-[15em]"
+          class="my-[7.5em] lg:my-[15em]"
         >
           <spinner />
         </div>
         <div v-else>
           <div
             v-if="!isEditing && activeItem === SIDEBAR_TYPE.basic"
-            class="grid grid-cols-1 md:grid-cols-[auto_1fr] items-start gap-y-8 mt-10 md:gap-x-16"
+            class="grid grid-cols-1 lg:grid-cols-[auto_1fr] items-start gap-y-8 mt-10 lg:gap-x-16"
           >
-            <div class="flex items-center justify-center mx-auto md:mx-0">
+            <div class="flex items-center justify-center mx-auto lg:mx-0">
               <img
                 :src="avatar"
-                class="w-20 h-20 md:w-24 md:h-24 rounded-full"
+                class="w-20 h-20 lg:w-24 lg:h-24 rounded-full"
               >
             </div>
-            <div class="space-y-6 md:space-y-8">
+            <div class="space-y-6 lg:space-y-8">
               <div>
                 <label
-                  class="block text-base md:text-lg font-semibold text-gray-900"
+                  class="block text-base lg:text-lg font-semibold text-gray-900"
                 >Name</label>
-                <p class="text-gray-700 text-base md:text-lg italic">
+                <p class="text-gray-700 text-base lg:text-lg italic">
                   {{ profile?.name ?? "-" }}
                 </p>
               </div>
               <div>
                 <label
-                  class="block text-base md:text-lg font-semibold text-gray-900"
+                  class="block text-base lg:text-lg font-semibold text-gray-900"
                 >Email</label>
-                <p class="text-gray-700 text-base md:text-lg italic">
+                <p class="text-gray-700 text-base lg:text-lg italic">
                   {{ profile?.email ?? "-" }}
                 </p>
               </div>
               <div>
                 <label
-                  class="block text-base md:text-lg font-semibold text-gray-900"
+                  class="block text-base lg:text-lg font-semibold text-gray-900"
                 >Password</label>
-                <p class="text-gray-700 text-base md:text-lg italic">
+                <p class="text-gray-700 text-base lg:text-lg italic">
                   {{ profile?.password ? "********" : "-" }}
                 </p>
               </div>
@@ -148,12 +148,12 @@
 
           <div
             v-if="isEditing && activeItem === SIDEBAR_TYPE.basic"
-            class="grid grid-cols-1 md:grid-cols-[auto_1fr] items-start gap-y-8 mt-10 md:gap-x-16"
+            class="grid grid-cols-1 lg:grid-cols-[auto_1fr] items-start gap-y-8 mt-10 lg:gap-x-16"
           >
-            <div class="flex items-center justify-center mx-auto md:mx-0">
+            <div class="flex items-center justify-center mx-auto lg:mx-0">
               <img
                 :src="avatar"
-                class="w-20 h-20 md:w-24 md:h-24 rounded-full"
+                class="w-20 h-20 lg:w-24 lg:h-24 rounded-full"
               >
             </div>
 
@@ -185,24 +185,30 @@
                 type="password"
               />
 
-              <div class="py-2 md:py-3">
-                <div class="h-0.5 bg-neutral-500" />
-              </div>
+              <div class="flex-1">
+                <div class="flex flex-col items-center">
+                  <div
+                    class="w-full lg:w-[85%] border-t-2 border-gray-600 mt-3 lg:mt-4"
+                  />
+                </div>
 
-              <div class="flex flex-row justify-between space-x-4">
-                <button
-                  class="w-full text-red-500 py-2 bg-white border border-red-500 px-4 font-semibold rounded hover:bg-red-50 transition"
-                  @click="handleReset"
+                <div
+                  class="flex flex-row justify-between space-x-4 my-7 lg:my-8"
                 >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  :disabled="!meta?.valid || isLoading"
-                  class="w-full bg-black/90 text-white py-2 px-4 rounded font-semibold hover:bg-gray-700/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {{ isLoading ? "Loading..." : "Update" }}
-                </button>
+                  <button
+                    class="w-full text-red-500 py-2 bg-white border border-red-500 px-4 font-semibold rounded hover:bg-red-50 transition"
+                    @click="handleReset"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    :disabled="!meta?.valid || isLoading"
+                    class="w-full bg-black/90 text-white py-2 px-4 rounded font-semibold hover:bg-gray-700/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {{ isLoading ? "Loading..." : "Update" }}
+                  </button>
+                </div>
               </div>
             </Form>
           </div>
@@ -238,7 +244,7 @@ import {
 } from "lucide-vue-next";
 
 import { useAuth } from "@/composables/useAuth";
-import { useDesktop } from "@/composables/useDesktop";
+import { useScreen } from "@/composables/useScreen";
 import { useProfile } from "@/composables/useProfile";
 
 import InputField from "@/components/InputField.vue";
@@ -270,7 +276,7 @@ export default defineComponent({
   setup() {
     const { onLogout } = useAuth();
     const { error, profile, isLoading, getProfile, onUpdate } = useProfile();
-    const { isDesktop } = useDesktop();
+    const { isDesktop } = useScreen();
 
     const activeItem = ref(SIDEBAR_TYPE.basic);
     const isSidebarOpen = ref(false);

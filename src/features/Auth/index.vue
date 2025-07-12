@@ -1,10 +1,13 @@
 <template>
   <div class="max-w-lg w-full">
-    <div class="flex flex-col items-center mb-[4em] text-center">
-      <h1 class="text-3xl sm:text-4xl font-normal mb-4 text-gray-800">
+    <div
+      class="flex flex-col items-center mb-[2.5em] md:mb-[2em] text-center"
+    >
+      <h1
+        class="text-3xl sm:text-4xl font-normal underline italic md:mb-4 text-gray-800"
+      >
         Welcome to <span class="font-bold text-sky-600">myApp</span>
       </h1>
-      <div class="w-full sm:w-[14em] border-t-2 border-gray-600 mt-1" />
     </div>
     <auth-form :mode="mode" />
   </div>
