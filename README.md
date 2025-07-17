@@ -4,9 +4,7 @@ This project build using Stack:
 
 - Vite
 - Vue3
-- Vitest
 - TailwindCSS
-- daisyUI
 - Vee validate
 - Yup
 - Vue toastification
